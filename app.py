@@ -1,38 +1,16 @@
-'''
-import cv2
-from PIL import Image
 
-def convert_signature_to_transparent_png(input_path, output_path):
-    # 读取图片
-    image = cv2.imread(input_path)
-    # 转换到灰度图
-    gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-    
-    # 应用二值化处理
-    # 使用OTSU自动阈值
-    _, binary = cv2.threshold(gray, 0, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)
-    
-    # 创建一个RGBA图像（具有透明通道）
-    w, h = binary.shape
-    transparent_image = Image.new("RGBA", (h, w), (0, 0, 0, 0))
-    pixels = transparent_image.load()
-    
-    # 将二值化图像中的白色转换为透明，黑色转换为黑色
-    for i in range(w):
-        for j in range(h):
-            if binary[i, j] == 0:
-                pixels[j, i] = (0, 0, 0, 255)  # 黑色
-            else:
-                pixels[j, i] = (0, 0, 0, 0)  # 透明
-    
-    # 保存图像
-    transparent_image.save(output_path)
-
-# 使用函数
-convert_signature_to_transparent_png('/nfs/home/1002_sunbo/RW_Experiments/Personal_project/Github_code/Image/name.jpg', '/nfs/home/1002_sunbo/RW_Experiments/Personal_project/Github_code/Image/output_signature.png')
+import streamlit as st
+ 
+# 使用st.cache来安装opencv-python库
+@st.cache(allow_output_mutation=True)
+def install_opencv():
+    import subprocess
+    subprocess.run(["pip", "install", "opencv-python"])
+ 
+# 调用安装函数
+install_opencv()
 
 
-'''
 import streamlit as st
 import cv2
 from PIL import Image
