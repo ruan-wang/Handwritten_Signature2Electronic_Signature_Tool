@@ -1,16 +1,3 @@
-
-import streamlit as st
- 
-# 使用st.cache来安装opencv-python库
-@st.cache(allow_output_mutation=True)
-def install_opencv():
-    import subprocess
-    subprocess.run(["pip", "install", "opencv-python"])
- 
-# 调用安装函数
-install_opencv()
-
-
 import streamlit as st
 import cv2
 from PIL import Image
